@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Shots By Whatsername</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../pictures/other heart.png" type="image/png">
+    <style>
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #f8f9fa;
+            --accent-color: #000000;
+            --text-primary: #000000;
+            --text-secondary: #6c757d;
+            --border-color: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--primary-color);
+            overflow-x: hidden;
+        }
+
+        /* Header Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--text-secondary);
+        }
+
+        .nav-link.active {
+            color: var(--accent-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--text-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--text-primary);
+            margin: 3px 0;
+            transition: var(--transition);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 6rem;
+            min-height: 100vh;
+        }
+
+        /* Contact Hero Section */
+        .contact-hero {
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        /* Contact Content */
+        .contact-content {
+            padding: 6rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-info-center {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            background: var(--primary-color);
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-color);
+            color: var(--text-primary);
+            transition: var(--transition);
+            resize: vertical;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            background: var(--text-secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--shadow-medium);
+        }
+
+        .submit-btn:disabled {
+            background: var(--border-color);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Contact Info */
+        .contact-info {
+            padding: 2rem;
+        }
+
+        .info-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--secondary-color);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+
+        .info-item:hover {
+            background: #f1f3f4;
+            transform: translateY(-2px);
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-content p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .info-content a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .info-content a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Services Section */
+        .services-section {
+            background: var(--secondary-color);
+            padding: 6rem 2rem;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .services-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 3rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--primary-color);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            transition: var(--transition);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--shadow-medium);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        /* Success Message */
+        .success-message,
+        .error-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .error-message {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--accent-color);
+            color: white;
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: white;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--primary-color);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                gap: 3rem;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+            
+            .main-content {
+                padding-top: 5rem;
+            }
+            
+            .contact-hero {
+                padding: 2rem 1rem;
+            }
+            
+            .contact-content {
+                padding: 3rem 1rem;
+            }
+            
+            .contact-info-center {
+                max-width: 100%;
+            }
+            
+            .social-links {
+                gap: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <nav class="nav">
+            <a href="../" class="logo">Shots By Whatsername</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../" class="nav-link">Home</a></li>
+                <li><a href="../gallery/" class="nav-link">Gallery</a></li>
+                <li><a href="../about/" class="nav-link">About</a></li>
+                <li><a href="./" class="nav-link active">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Contact Hero Section -->
+        <section class="contact-hero">
+            <div class="hero-content">
+                <h1 class="page-title">Get In Touch</h1>
+                <p class="page-subtitle">Let's discuss your photography needs and create something beautiful together</p>
+            </div>
+        </section>
+
+        <!-- Contact Content -->
+        <section class="contact-content">
+            <div class="contact-info-center">
+                <h2 class="info-title">Contact Information</h2>
+                
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <h3>Location</h3>
+                        <p>Available for shoots worldwide<br>Based in Ireland</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">📧</div>
+                    <div class="info-content">
+                        <h3>Email</h3>
+                        <p><a href="mailto:hello@shotsbywhatsername.com">hello@shotsbywhatsername.com</a></p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">📱</div>
+                    <div class="info-content">
+                        <h3>Phone</h3>
+                        <p><a href="tel:+353123456789">+353 12 345 6789</a></p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">⏰</div>
+                    <div class="info-content">
+                        <h3>Response Time</h3>
+                        <p>I typically respond within 24 hours<br>Available 7 days a week</p>
+                    </div>
+                </div>
+            </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>Let's Stay Connected</h3>
+            <p>Follow my work and get updates on new projects and availability</p>
+            <div class="social-links">
+                <a href="#" class="social-link">📘</a>
+                <a href="#" class="social-link">📷</a>
+                <a href="#" class="social-link">🐦</a>
+                <a href="#" class="social-link">💼</a>
+            </div>
+            <p>&copy; 2025 Shots By Whatsername. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            
+            const spans = menuToggle.querySelectorAll('span');
+            if (navMenu.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                const spans = menuToggle.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.info-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

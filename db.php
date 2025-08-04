@@ -1,0 +1,14 @@
+<?php
+// db.php — Local XAMPP Database Configuration
+$host = 'localhost';
+$db = 'shots_by_whatsername';
+$user = 'root';
+$pass = '';
+
+try {
+    $conn = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("DB connection failed: " . $e->getMessage());
+}
+?>

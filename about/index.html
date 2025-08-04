@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Shots By Whatsername</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="../pictures/other heart.png" type="image/png">
+    <style>
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #f8f9fa;
+            --accent-color: #000000;
+            --text-primary: #000000;
+            --text-secondary: #6c757d;
+            --border-color: #e9ecef;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--primary-color);
+            overflow-x: hidden;
+        }
+
+        /* Header Navigation */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 400;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--text-secondary);
+        }
+
+        .nav-link.active {
+            color: var(--accent-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--text-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--text-primary);
+            margin: 3px 0;
+            transition: var(--transition);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 6rem;
+            min-height: 100vh;
+        }
+
+        /* About Hero Section */
+        .about-hero {
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        /* About Content */
+        .about-content {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 6rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px var(--shadow-light);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+        }
+
+        .about-text {
+            padding: 0 2rem;
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            background: var(--secondary-color);
+            padding: 6rem 2rem;
+        }
+
+        .skills-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .skills-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 4rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .skill-item {
+            padding: 2rem;
+            background: var(--primary-color);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            transition: var(--transition);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--shadow-medium);
+        }
+
+        .skill-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1.5rem;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .skill-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .skill-item p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Experience Section */
+        .experience-section {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .experience-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--accent-color);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: white;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--secondary-color);
+            color: var(--text-secondary);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--primary-color);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+                gap: 3rem;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+            
+            .main-content {
+                padding-top: 5rem;
+            }
+            
+            .about-hero {
+                padding: 2rem 1rem;
+            }
+            
+            .about-content {
+                padding: 3rem 1rem;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+            
+            .about-text {
+                padding: 0;
+            }
+            
+            .skills-section,
+            .experience-section,
+            .cta-section {
+                padding: 3rem 1rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .timeline {
+                padding-left: 1rem;
+            }
+            
+            .timeline-item {
+                padding-left: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <nav class="nav">
+            <a href="../" class="logo">Shots By Whatsername</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="../" class="nav-link">Home</a></li>
+                <li><a href="../gallery/" class="nav-link">Gallery</a></li>
+                <li><a href="./" class="nav-link active">About</a></li>
+                <li><a href="../contact/" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- About Hero Section -->
+        <section class="about-hero">
+            <div class="hero-content">
+                <h1 class="page-title">About Me</h1>
+                <p class="page-subtitle">Passionate photographer capturing life's beautiful moments</p>
+            </div>
+        </section>
+
+        <!-- About Content -->
+        <section class="about-content">
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="../pictures/water.webp" alt="Photographer at work" loading="lazy">
+                </div>
+                <div class="about-text">
+                    <h2>My Story</h2>
+                    <p>Welcome to my world of photography! I'm a passionate photographer with a keen eye for capturing life's most precious moments. Photography isn't just my profession—it's my way of seeing and interpreting the world around us.</p>
+                    
+                    <p>From intimate portraits that reveal the soul to breathtaking landscapes that showcase nature's grandeur, I strive to create images that not only document moments but tell compelling stories. Each photograph is crafted with attention to detail, creative vision, and technical excellence.</p>
+                    
+                    <p>My journey began with a simple fascination for how light and shadow could transform ordinary scenes into extraordinary art. Today, I combine technical expertise with artistic intuition to deliver photographs that exceed expectations and preserve memories for generations to come.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Shots By Whatsername. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            
+            const spans = menuToggle.querySelectorAll('span');
+            if (navMenu.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                const spans = menuToggle.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        // Header background on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.about-text, .about-image').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
