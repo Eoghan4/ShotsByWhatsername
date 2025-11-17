@@ -131,13 +131,13 @@ $message = '';
 $messageType = 'error';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Generate CSRF token if not exists
-    if (!isset($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    }
+    // Debug: Log session and post tokens
+    error_log("POST csrf_token: " . ($_POST['csrf_token'] ?? 'NOT SET'));
+    error_log("SESSION csrf_token: " . ($_SESSION['csrf_token'] ?? 'NOT SET'));
+    error_log("Session ID: " . session_id());
 
     // Verify CSRF token
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+    if (!isset($_SESSION['csrf_token']) || !isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         $message = "Invalid security token. Please try again.";
     } else {
         $title = trim($_POST['title'] ?? '');
