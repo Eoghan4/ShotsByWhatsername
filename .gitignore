@@ -1,0 +1,44 @@
+# Configuration file with sensitive credentials
+config.php
+
+# Test files (remove from production)
+test_imgur.php
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.sql.gz
+backups/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+error_log
+debug.log
+access.log
+
+# Temporary files
+tmp/
+temp/
+cache/
+uploads/temp/
+
+# Environment files
+.env
+.env.local
+
+# Deployment artifacts
+.htaccess.backup
+deploy-*.log
