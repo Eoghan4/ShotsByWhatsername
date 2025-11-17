@@ -1,13 +1,20 @@
 <?php
+require '../db.php';
+
+// Configure session before starting
+if (ENVIRONMENT === 'production') {
+    ini_set('session.cookie_secure', '1');
+    ini_set('session.cookie_httponly', '1');
+    ini_set('session.cookie_samesite', 'Lax');
+    ini_set('session.use_strict_mode', '1');
+}
+
 session_start();
+
 if (empty($_SESSION['logged_in'])) {
     header('Location: ../login');
     exit;
 }
-?>
-
-<?php
-require '../db.php';
 
 // Get Imgur Client-ID from configuration
 $clientId = IMGUR_CLIENT_ID;
