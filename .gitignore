@@ -8,6 +8,10 @@ test_imgur.php
 uploads/*
 !uploads/.htaccess
 
+# Static HTML files replaced by PHP equivalents
+index.html
+about/index.html
+
 # Backup files
 *.bak
 *.backup

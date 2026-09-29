@@ -438,6 +438,7 @@ if (!isset($_SESSION['csrf_token'])) {
     <div class="nav-buttons">
         <a href="../" class="nav-button">Home</a>
         <a href="../gallery/" class="nav-button">Gallery</a>
+        <a href="../admin/" class="nav-button">Dashboard</a>
     </div>
     
     <div class="upload-container">
