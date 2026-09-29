@@ -33,7 +33,7 @@
     Header unset X-Powered-By
     
     # Content Security Policy (adjust as needed)
-    # Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' https://i.imgur.com data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.imgur.com;"
+    # Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self';"
 </IfModule>
 
 # Protect sensitive files

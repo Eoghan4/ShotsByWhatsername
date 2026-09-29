@@ -16,12 +16,9 @@ if (empty($_SESSION['logged_in'])) {
     exit;
 }
 
-// Get Imgur Client-ID from configuration
-$clientId = IMGUR_CLIENT_ID;
-
 /**
  * Validates uploaded image file
- * 
+ *
  * @param array $file The $_FILES array element
  * @return array Returns ['valid' => bool, 'error' => string]
  */
@@ -71,60 +68,29 @@ function validateImageFile($file) {
 }
 
 /**
- * Uploads image to Imgur
- * 
- * @param string $imagePath Path to the image file
- * @param string $clientId Imgur Client ID
+ * Saves uploaded image to the local filesystem
+ *
+ * @param array $file The $_FILES array element
+ * @param string $uploadDir Absolute path to the uploads directory
+ * @param string $uploadUrlBase Public URL prefix for the uploads directory
  * @return array Returns ['success' => bool, 'url' => string|null, 'error' => string|null]
  */
-function uploadToImgur($imagePath, $clientId) {
-    try {
-        $imageData = base64_encode(file_get_contents($imagePath));
+function saveImageLocally($file, $uploadDir, $uploadUrlBase) {
+    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $filename = uniqid('', true) . '.' . $extension;
+    $destination = $uploadDir . DIRECTORY_SEPARATOR . $filename;
 
-        $headers = [
-            "Authorization: Client-ID $clientId"
-        ];
-
-        $postFields = [
-            'image' => $imageData,
-            'type' => 'base64'
-        ];
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, 'https://api.imgur.com/3/image');
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30); // 30 second timeout
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); // 10 second connection timeout
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $curlError = curl_error($ch);
-        curl_close($ch);
-
-        if ($response === false) {
-            return ['success' => false, 'url' => null, 'error' => 'cURL error: ' . $curlError];
+    if (!is_dir($uploadDir)) {
+        if (!mkdir($uploadDir, 0755, true)) {
+            return ['success' => false, 'url' => null, 'error' => 'Could not create uploads directory'];
         }
-
-        $json = json_decode($response, true);
-
-        if ($json === null) {
-            return ['success' => false, 'url' => null, 'error' => 'Invalid JSON response from Imgur'];
-        }
-
-        if ($httpCode === 200 && isset($json['data']['link'])) {
-            return ['success' => true, 'url' => $json['data']['link'], 'error' => null];
-        } else {
-            $errorMsg = $json['data']['error'] ?? 'Unknown Imgur API error';
-            return ['success' => false, 'url' => null, 'error' => 'Imgur API error: ' . $errorMsg];
-        }
-    } catch (Exception $e) {
-        return ['success' => false, 'url' => null, 'error' => 'Exception: ' . $e->getMessage()];
     }
+
+    if (!move_uploaded_file($file['tmp_name'], $destination)) {
+        return ['success' => false, 'url' => null, 'error' => 'Failed to save image to server'];
+    }
+
+    return ['success' => true, 'url' => $uploadUrlBase . '/' . $filename, 'error' => null];
 }
 
 $message = '';
@@ -163,8 +129,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $tmpFile = $_FILES['image']['tmp_name'];
 
-                // Upload to Imgur
-                $uploadResult = uploadToImgur($tmpFile, $clientId);
+                // Save to local filesystem
+                $uploadResult = saveImageLocally($_FILES['image'], UPLOAD_DIR, UPLOAD_URL_BASE);
 
                 if ($uploadResult['success']) {
                     // Save to database
@@ -508,7 +474,7 @@ if (!isset($_SESSION['csrf_token'])) {
                 <label for="image">Select Image</label>
                 <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/gif,image/webp" required>
                 <small style="color: var(--text-secondary); margin-top: 0.5rem; display: block;">
-                    Accepted formats: JPG, PNG, GIF, WEBP. Max size: <?= MAX_FILE_SIZE / 1024 / 1024 ?>MB. Image will be uploaded to Imgur for hosting.
+                    Accepted formats: JPG, PNG, GIF, WEBP. Max size: <?= MAX_FILE_SIZE / 1024 / 1024 ?>MB.
                 </small>
             </div>
             
@@ -600,7 +566,7 @@ if (!isset($_SESSION['csrf_token'])) {
             
             // Show loading state
             const submitBtn = document.querySelector('button[type="submit"]');
-            submitBtn.textContent = 'Uploading to Imgur...';
+            submitBtn.textContent = 'Uploading...';
             submitBtn.disabled = true;
             submitBtn.style.cursor = 'not-allowed';
             

@@ -15,9 +15,11 @@ define('DB_NAME', 'shots_by_whatsername');
 define('DB_USER', 'root');
 define('DB_PASS', ''); // Set your database password
 
-// Imgur API Configuration
-// Get your Client ID from: https://api.imgur.com/oauth2/addclient
-define('IMGUR_CLIENT_ID', 'YOUR_IMGUR_CLIENT_ID_HERE');
+// File Upload Storage
+// UPLOAD_DIR: absolute path on the server where images are saved
+// UPLOAD_URL_BASE: the public URL prefix used to serve images
+define('UPLOAD_DIR', '/var/www/shotsbywhatsername/uploads');
+define('UPLOAD_URL_BASE', '/uploads');
 
 // File Upload Settings
 define('MAX_FILE_SIZE', 10 * 1024 * 1024); // 10MB in bytes

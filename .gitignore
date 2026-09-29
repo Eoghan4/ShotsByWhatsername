@@ -4,6 +4,10 @@ config.php
 # Test files (remove from production)
 test_imgur.php
 
+# Uploaded images (stored on server, not in git)
+uploads/*
+!uploads/.htaccess
+
 # Backup files
 *.bak
 *.backup
@@ -33,12 +37,3 @@ access.log
 tmp/
 temp/
 cache/
-uploads/temp/
-
-# Environment files
-.env
-.env.local
-
-# Deployment artifacts
-.htaccess.backup
-deploy-*.log

@@ -111,7 +111,14 @@ node_modules/
 Thumbs.db
 test_imgur.php
 deploy.sh
+deploy.bat
 DEPLOYMENT.md
+DEPLOYMENT_CHECKLIST.md
+README.md
+QUICK_START.md
+SERVER_COMMANDS.md
+sample_data.sql
+uploads/*
 EOF
 
 # Use rsync for efficient file transfer
@@ -124,6 +131,11 @@ rsync -avz --progress \
 rm /tmp/rsync-exclude
 
 print_success "Files uploaded successfully"
+
+# Ensure uploads directory exists with correct permissions
+print_header "Step 4b: Creating Uploads Directory"
+ssh "$SERVER_USER@$SERVER_IP" "mkdir -p $REMOTE_DIR/uploads && chown www-data:www-data $REMOTE_DIR/uploads && chmod 755 $REMOTE_DIR/uploads"
+print_success "Uploads directory ready"
 
 # Set permissions
 print_header "Step 5: Setting File Permissions"
@@ -247,17 +259,16 @@ print_header "Deployment Complete!"
 print_success "Application deployed successfully to $SERVER_IP"
 echo ""
 print_info "Next Steps:"
-echo "  1. Update config.php on server with production credentials"
-echo "  2. Change default admin password"
+echo "  1. SSH to server: ssh $SERVER_USER@$SERVER_IP"
+echo "  2. Edit config.php: nano /var/www/shotsbywhatsername/config.php"
+echo "     - Set ENVIRONMENT to 'production'"
+echo "     - Set DB_USER, DB_PASS to the production database credentials"
+echo "     - UPLOAD_DIR and UPLOAD_URL_BASE are already set correctly"
 echo "  3. Test the site: http://$DOMAIN_NAME"
-echo "  4. Run diagnostic test: http://$DOMAIN_NAME/test_imgur.php"
-echo "  5. Remove test file after verification"
 echo ""
 print_warning "Important Reminders:"
-echo "  • Set ENVIRONMENT='production' in config.php"
-echo "  • Configure Imgur API Client ID in config.php"
-echo "  • Set up automated backups"
-echo "  • Configure firewall (UFW)"
+echo "  • config.php must be edited on the server — it is NOT deployed from your machine"
+echo "  • Uploaded images are stored in /var/www/shotsbywhatsername/uploads/"
 echo "  • Monitor logs at /var/log/apache2/"
 echo ""
 print_info "For detailed instructions, see DEPLOYMENT.md"
